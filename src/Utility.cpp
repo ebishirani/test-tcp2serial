@@ -12,14 +12,16 @@ const std::string kCommandLineHelp("Specified arguments was wrong!"
                                    "options as arguments:\n-p port_number"
                                    "\n-s serial_port_name"
                                    "\n-b serial_port_baudrate.\n"
+                                   "\n-d enable/disable interpret runtime"
+                                   " option:1=enable, 0=disable."
                                    "For example:tcp2serial -p 2101 -s "
-                                   "/dev/sttyS2 -b 115200\n"
+                                   "/dev/sttyS2 -b 115200 -d 0\n"
                                    "Next options are optional.You can change "
                                    "them in runtime:\n-c command type.Valid"
                                    " values for this option are:0, 1 and 2."
                                    "0 means disable stream output of serial"
                                    " port. 1 means enable stream output of"
-                                   " serial port and 3 means simple command."
+                                   " serial port and 2 means simple command."
                                    "In runtime to change this option only "
                                    "use 0 and 1 values.\n-o crlf removing."
                                    "Valid values for this option are 0 and 1."
@@ -74,6 +76,13 @@ bool Utility::parseCommandLineArgs(int argc, char *argv[],
                 i++;
                 numOfEssentialOptions++;
             }
+            else if(0 == item.compare("-d"))
+            {
+                std::string runtimeInterpret(argv[i + 1]);
+                optionList['d'] = runtimeInterpret;
+                i++;
+                numOfEssentialOptions++;
+            }
             else if (0 == item.compare("-c"))
             {
                 std::string commandType(argv[i + 1]);
@@ -95,7 +104,7 @@ bool Utility::parseCommandLineArgs(int argc, char *argv[],
             }
         }
         //Check are all essential options specified?
-        if (3 == numOfEssentialOptions)
+        if (4 == numOfEssentialOptions)
         {
             result = true;
         }

@@ -28,7 +28,7 @@ add_executable(${PROJECT_NAME} ${SRC})
 
 target_link_libraries(${PROJECT_NAME}
     linuxserialport
-    #tcp_client_server
+    tcpclientserver
     pthread
     )
 
